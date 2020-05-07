@@ -30,8 +30,12 @@ namespace ChatApp
             InitializeComponent();
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
+        private void btnSend_Click(object sender, RoutedEventArgs e)
         {
+            listener = new TcpListener(IPAddress.Any, port);
+            listener.Start();
+            client = listener.AcceptTcpClient();
+
             byte[] message = Encoding.Unicode.GetBytes(tBMessage.Text);
             IPAddress serverIP = IPAddress.Parse("127.0.0.1");
             IPEndPoint destination = new IPEndPoint(serverIP, 12345);
