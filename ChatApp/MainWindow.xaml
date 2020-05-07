@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="211.5" Width="208">
     <Grid>
-        <Grid Visibility="Hidden" x:Name="gridHome">
+        <Grid x:Name="gridHome">
             <Button x:Name="buttonHost" Content="Host" HorizontalAlignment="Left" Margin="62,80,0,0" VerticalAlignment="Top" Width="75" Click="buttonHost_Click"/>
             <Button x:Name="buttonClient" Content="Client" HorizontalAlignment="Left" Margin="62,55,0,0" VerticalAlignment="Top" Width="75" Click="buttonClient_Click"/>
         </Grid>
@@ -17,8 +17,8 @@
             <TextBox x:Name="tBIP" HorizontalAlignment="Left" Height="23" Margin="62,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
             <TextBox x:Name="tBPort" HorizontalAlignment="Left" Height="23" Margin="62,38,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
         </Grid>
-        <Grid  x:Name="gridHost">
-            <Button x:Name="btnHostSend" Content="Button" HorizontalAlignment="Left" Margin="10,145,0,0" VerticalAlignment="Top" Width="172" Click="button_Click"/>
+        <Grid Visibility="Hidden"  x:Name="gridHost">
+            <Button x:Name="btnRecieve" Content="Button" HorizontalAlignment="Left" Margin="10,145,0,0" VerticalAlignment="Top" Width="172" Click="btnReceive_Click"/>
             <TextBox x:Name="tBHostMessage" HorizontalAlignment="Left" Height="74" Margin="10,66,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="172"/>
             <TextBox x:Name="tBHostPort" HorizontalAlignment="Left" Height="23" Margin="62,22,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
         </Grid>

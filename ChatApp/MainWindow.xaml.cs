@@ -22,6 +22,9 @@ namespace ChatApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        TcpListener listener;
+        TcpClient client;
+        int port = 12345;
         public MainWindow()
         {
             InitializeComponent();
@@ -47,6 +50,14 @@ namespace ChatApp
         {
             gridHome.Visibility = Visibility.Hidden;
             gridHost.Visibility = Visibility.Visible;
+        }
+
+        private void btnReceive_Click(object sender, RoutedEventArgs e)
+        {
+            IPEndPoint clientEndPoint = new IPEndPoint(IPAddress.Any, 0);
+            UdpClient client = new UdpClient(12345);
+            byte[] instream = client.Receive(ref clientEndPoint);
+            tBHostMessage.Text = Encoding.Unicode.GetString(instream);
         }
     }
 }
