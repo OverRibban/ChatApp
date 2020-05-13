@@ -32,16 +32,16 @@ namespace ChatApp
 
         private void btnSend_Click(object sender, RoutedEventArgs e)
         {
-            listener = new TcpListener(IPAddress.Any, port);
-            listener.Start();
-            client = listener.AcceptTcpClient();
-
-            byte[] message = Encoding.Unicode.GetBytes(tBMessage.Text);
-            IPAddress serverIP = IPAddress.Parse("127.0.0.1");
-            IPEndPoint destination = new IPEndPoint(serverIP, 12345);
-            UdpClient client = new UdpClient();
-            client.Send(message, message.Length, destination);
-
+            IPAddress adress = IPAddress.Parse(tBIP.Text);
+            client = new TcpClient();
+            client.NoDelay = true;
+            client.Connect(adress, port);
+            if(client.Connected)
+            {
+                byte[] outData = Encoding.Unicode.GetBytes("Hej");
+                client.GetStream().Write(outData, 0, outData.Length);
+                client.Close();
+            }
         }
 
         private void buttonClient_Click(object sender, RoutedEventArgs e)
@@ -58,10 +58,16 @@ namespace ChatApp
 
         private void btnReceive_Click(object sender, RoutedEventArgs e)
         {
-            IPEndPoint clientEndPoint = new IPEndPoint(IPAddress.Any, 0);
-            UdpClient client = new UdpClient(12345);
-            byte[] instream = client.Receive(ref clientEndPoint);
-            tBHostMessage.Text = Encoding.Unicode.GetString(instream);
+            listener = new TcpListener(IPAddress.Any, port);
+            listener.Start();
+            this.client = listener.AcceptTcpClient();
+
+            byte[] inData = new byte[256];
+            int numByte = this.client.GetStream().Read(inData, 0, inData.Length);
+
+            tBHostMessage.Text = Encoding.Unicode.GetString(inData, 0, numByte);
+            this.client.Close();
+            listener.Stop();
         }
     }
 }
