@@ -25,23 +25,17 @@ namespace ChatApp
         TcpListener listener;
         TcpClient client;
         int port = 12345;
+        List<TcpClient> listOfClients = new List<TcpClient>();
         public MainWindow()
         {
             InitializeComponent();
         }
 
+
+
         private void btnSend_Click(object sender, RoutedEventArgs e)
         {
-            IPAddress adress = IPAddress.Parse(tBIP.Text);
-            client = new TcpClient();
-            client.NoDelay = true;
-            client.Connect(adress, port);
-            if(client.Connected)
-            {
-                byte[] outData = Encoding.Unicode.GetBytes("Hej");
-                client.GetStream().Write(outData, 0, outData.Length);
-                client.Close();
-            }
+            StartStreaming();
         }
 
         private void buttonClient_Click(object sender, RoutedEventArgs e)
@@ -56,18 +50,90 @@ namespace ChatApp
             gridHost.Visibility = Visibility.Visible;
         }
 
-        private void btnReceive_Click(object sender, RoutedEventArgs e)
+        private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-            listener = new TcpListener(IPAddress.Any, port);
-            listener.Start();
-            this.client = listener.AcceptTcpClient();
+            try
+            {
+                listener = new TcpListener(IPAddress.Any, port);
+                listener.Start();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            btnStart.IsEnabled = false;
+            StartReceiving();
+        }
 
-            byte[] inData = new byte[256];
-            int numByte = this.client.GetStream().Read(inData, 0, inData.Length);
+        private async void StartReceiving()
+        {
+            try
+            {
+                client = await listener.AcceptTcpClientAsync();
+                listOfClients.Add(client);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            StartReading(client);
+        }
 
-            tBHostMessage.Text = Encoding.Unicode.GetString(inData, 0, numByte);
-            this.client.Close();
-            listener.Stop();
+        private async void StartReading(TcpClient k)
+        {
+            byte[] buffer = new byte[1024];
+            int n = 0;
+            try
+            {
+                n = await k.GetStream().ReadAsync(buffer, 0, buffer.Length);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            tBHostMessage.AppendText(Encoding.Unicode.GetString(buffer, 0, n));
+            
+            StartReading(k);
+        }
+
+        private void btnConnect_Click(object sender, RoutedEventArgs e)
+        {
+            client = new TcpClient();
+            client.NoDelay = true;
+            if(!client.Connected)
+            {
+                StartConnection();
+            }
+        }
+
+        private async void StartConnection()
+        {
+            try
+            {
+                IPAddress address = IPAddress.Parse(tBIP.Text);
+                await client.ConnectAsync(address, port);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            btnConnect.IsEnabled = false;
+        }
+        private async void StartStreaming()
+        {
+            byte[] outData = Encoding.Unicode.GetBytes(tBMessage.Text);
+            try
+            {
+                await client.GetStream().WriteAsync(outData, 0, outData.Length);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
         }
     }
 }

@@ -5,22 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChatApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="211.5" Width="208">
+        Title="MainWindow" Height="252.5" Width="439">
     <Grid>
-        <Grid x:Name="gridHome">
+        <Grid x:Name="gridHome" Height="217" VerticalAlignment="Top">
             <Button x:Name="buttonHost" Content="Host" HorizontalAlignment="Left" Margin="62,80,0,0" VerticalAlignment="Top" Width="75" Click="buttonHost_Click"/>
             <Button x:Name="buttonClient" Content="Client" HorizontalAlignment="Left" Margin="62,55,0,0" VerticalAlignment="Top" Width="75" Click="buttonClient_Click"/>
         </Grid>
         <Grid Visibility="Hidden" x:Name="gridClient">
-            <Button x:Name="btnSend" Content="Button" HorizontalAlignment="Left" Margin="10,145,0,0" VerticalAlignment="Top" Width="172" Click="btnSend_Click"/>
-            <TextBox x:Name="tBMessage" HorizontalAlignment="Left" Height="74" Margin="10,66,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="172"/>
-            <TextBox x:Name="tBIP" HorizontalAlignment="Left" Height="23" Margin="62,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-            <TextBox x:Name="tBPort" HorizontalAlignment="Left" Height="23" Margin="62,38,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+            <Button x:Name="btnSend" Content="Button" HorizontalAlignment="Left" Margin="10,187,0,0" VerticalAlignment="Top" Width="411" Click="btnSend_Click"/>
+            <TextBox x:Name="tBMessage" HorizontalAlignment="Left" Height="144" Margin="10,38,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="411"/>
+            <TextBox x:Name="tBIP" HorizontalAlignment="Left" Height="23" Margin="153,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="188"/>
+            <Button x:Name="btnConnect" Content="Button" HorizontalAlignment="Left" Margin="346,10,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.413,0.4" Click="btnConnect_Click"/>
         </Grid>
-        <Grid Visibility="Hidden"  x:Name="gridHost">
-            <Button x:Name="btnRecieve" Content="Button" HorizontalAlignment="Left" Margin="10,145,0,0" VerticalAlignment="Top" Width="172" Click="btnReceive_Click"/>
-            <TextBox x:Name="tBHostMessage" HorizontalAlignment="Left" Height="74" Margin="10,66,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="172"/>
-            <TextBox x:Name="tBHostPort" HorizontalAlignment="Left" Height="23" Margin="62,22,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Grid Visibility="Hidden" x:Name="gridHost">
+            <TextBox x:Name="tBHostMessage" HorizontalAlignment="Left" Height="152" Margin="10,35,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="411"/>
+            <Button x:Name="btnStart" Content="Button" HorizontalAlignment="Left" Margin="346,10,0,0" VerticalAlignment="Top" Width="75" Click="btnStart_Click"/>
+
+
         </Grid>
     </Grid>
 </Window>
