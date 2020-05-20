@@ -20,8 +20,6 @@
         <Grid Visibility="Hidden" x:Name="gridHost">
             <TextBox x:Name="tBHostMessage" HorizontalAlignment="Left" Height="152" Margin="10,35,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="411"/>
             <Button x:Name="btnStart" Content="Button" HorizontalAlignment="Left" Margin="346,10,0,0" VerticalAlignment="Top" Width="75" Click="btnStart_Click"/>
-
-
         </Grid>
     </Grid>
 </Window>

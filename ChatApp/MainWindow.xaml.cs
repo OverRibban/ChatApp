@@ -54,7 +54,9 @@ namespace ChatApp
         {
             try
             {
+                //Creates a tcplistener with current IP and set port
                 listener = new TcpListener(IPAddress.Any, port);
+                //Start listener
                 listener.Start();
             }
             catch (Exception ex)
@@ -70,6 +72,7 @@ namespace ChatApp
         {
             try
             {
+                //Waits for user to connect and saves client to variable
                 client = await listener.AcceptTcpClientAsync();
                 listOfClients.Add(client);
             }
@@ -94,7 +97,7 @@ namespace ChatApp
                 return;
             }
             tBHostMessage.AppendText(Encoding.Unicode.GetString(buffer, 0, n));
-            
+            //recursive loop in order to continue taking in messages
             StartReading(k);
         }
 
