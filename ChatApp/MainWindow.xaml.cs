@@ -31,7 +31,7 @@ namespace ChatApp
             InitializeComponent();
         }
 
-
+        #region GUI BUTTONS
 
         private void btnSend_Click(object sender, RoutedEventArgs e)
         {
@@ -54,10 +54,8 @@ namespace ChatApp
         {
             try
             {
-                //Creates a tcplistener with current IP and set port
-                listener = new TcpListener(IPAddress.Any, port);
-                //Start listener
-                listener.Start();
+                listener = new TcpListener(IPAddress.Any, port); //Creates a tcplistener with current IP and set port
+                listener.Start(); //Start listener
             }
             catch (Exception ex)
             {
@@ -68,55 +66,67 @@ namespace ChatApp
             StartReceiving();
         }
 
+        private void btnConnect_Click(object sender, RoutedEventArgs e)
+        {
+            client = new TcpClient();
+            client.NoDelay = true;
+            if (!client.Connected)
+            {
+                StartConnection();
+            }
+        }
+
+        #endregion GUI BUTTONS
+
+        #region FUNCTIONS
+
+        /// <summary>
+        /// Starts the server and waits for client
+        /// </summary>
         private async void StartReceiving()
         {
             try
             {
-                //Waits for user to connect and saves client to variable
-                client = await listener.AcceptTcpClientAsync();
+                client = await listener.AcceptTcpClientAsync(); //Waits for user to connect and saves client to variable
                 listOfClients.Add(client);
             }
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-            StartReading(client);
+            StartReading(client); 
         }
-
+        /// <summary>
+        /// Waits for client to message to host
+        /// </summary>
+        /// <param name="k"></param>
         private async void StartReading(TcpClient k)
         {
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[1024]; //send using bytes in favor for faster network speed
             int n = 0;
             try
             {
-                n = await k.GetStream().ReadAsync(buffer, 0, buffer.Length);
+                n = await k.GetStream().ReadAsync(buffer, 0, buffer.Length); // await sent message from client
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
                 return;
             }
-            tBHostMessage.AppendText(Encoding.Unicode.GetString(buffer, 0, n));
+            tBHostMessage.AppendText(Encoding.Unicode.GetString(buffer, 0, n)); //decode bytes into unicode to display onto gui
             //recursive loop in order to continue taking in messages
-            StartReading(k);
+            StartReading(k); //Recursive loop that continues recieving sent messages
         }
 
-        private void btnConnect_Click(object sender, RoutedEventArgs e)
-        {
-            client = new TcpClient();
-            client.NoDelay = true;
-            if(!client.Connected)
-            {
-                StartConnection();
-            }
-        }
-
+        /// <summary>
+        /// Connects to set ip and port
+        /// </summary>
         private async void StartConnection()
         {
             try
             {
-                IPAddress address = IPAddress.Parse(tBIP.Text);
-                await client.ConnectAsync(address, port);
+                IPAddress address = IPAddress.Parse(tBIP.Text); //parse IP to begin connection
+                await client.ConnectAsync(address, port);  //connect using said ip and port
             }
             catch(Exception ex)
             {
@@ -125,12 +135,15 @@ namespace ChatApp
             }
             btnConnect.IsEnabled = false;
         }
+        /// <summary>
+        /// Sends message in bytes to host
+        /// </summary>
         private async void StartStreaming()
         {
-            byte[] outData = Encoding.Unicode.GetBytes(tBMessage.Text);
+            byte[] outData = Encoding.Unicode.GetBytes(tBMessage.Text); //send using bytes in favor for faster network speed
             try
             {
-                await client.GetStream().WriteAsync(outData, 0, outData.Length);
+                await client.GetStream().WriteAsync(outData, 0, outData.Length); //send bytes to host
             }
             catch(Exception ex)
             {
@@ -138,5 +151,7 @@ namespace ChatApp
                 return;
             }
         }
+
+        #endregion FUNCTIONS
     }
 }
