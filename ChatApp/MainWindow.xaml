@@ -5,21 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChatApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="252.5" Width="439">
+        Title="MainWindow" Height="250" Width="400">
     <Grid>
-        <Grid x:Name="gridHome" Height="217" VerticalAlignment="Top">
-            <Button x:Name="buttonHost" Content="Host" HorizontalAlignment="Left" Margin="62,80,0,0" VerticalAlignment="Top" Width="75" Click="buttonHost_Click"/>
-            <Button x:Name="buttonClient" Content="Client" HorizontalAlignment="Left" Margin="62,55,0,0" VerticalAlignment="Top" Width="75" Click="buttonClient_Click"/>
+        <Grid x:Name="gridHome" Height="217" VerticalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Button x:Name="buttonHost" Content="Host" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="buttonHost_Click" Grid.Row="0"/>
+            <Button x:Name="buttonClient" Content="Client" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="buttonClient_Click" Grid.Row="1"/>
         </Grid>
         <Grid Visibility="Hidden" x:Name="gridClient">
-            <Button x:Name="btnSend" Content="Button" HorizontalAlignment="Left" Margin="10,187,0,0" VerticalAlignment="Top" Width="411" Click="btnSend_Click"/>
-            <TextBox x:Name="tBMessage" HorizontalAlignment="Left" Height="144" Margin="10,38,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="411"/>
-            <TextBox x:Name="tBIP" HorizontalAlignment="Left" Height="23" Margin="153,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="188"/>
-            <Button x:Name="btnConnect" Content="Button" HorizontalAlignment="Left" Margin="346,10,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.413,0.4" Click="btnConnect_Click"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="15*"/>
+                <ColumnDefinition Width="34*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="btnSend" Content="Send" HorizontalAlignment="Left" Margin="10,187,0,0" VerticalAlignment="Top" Width="372" Click="btnSend_Click" Grid.ColumnSpan="2"/>
+            <TextBox x:Name="tBMessage" HorizontalAlignment="Left" Height="144" Margin="10,38,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="372" Grid.ColumnSpan="2"/>
+            <TextBox x:Name="tBIP" HorizontalAlignment="Left" Height="23" Margin="81,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="209" Grid.ColumnSpan="2"/>
+            <Button x:Name="btnConnect" Content="Connect" HorizontalAlignment="Left" Margin="187,10,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.413,0.4" Click="btnConnect_Click" Height="23" Grid.Column="1"/>
+            <Label x:Name="label" Content="IP-Address&#xD;&#xA;" Margin="10,9,39,0" VerticalAlignment="Top" Height="24"/>
         </Grid>
         <Grid Visibility="Hidden" x:Name="gridHost">
-            <TextBox x:Name="tBHostMessage" HorizontalAlignment="Left" Height="152" Margin="10,35,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="411"/>
-            <Button x:Name="btnStart" Content="Button" HorizontalAlignment="Left" Margin="346,10,0,0" VerticalAlignment="Top" Width="75" Click="btnStart_Click"/>
+            <TextBox x:Name="tBHostMessage" HorizontalAlignment="Left" Height="152" Margin="10,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="372"/>
+            <Button x:Name="btnStart" Content="Start Server" HorizontalAlignment="Left" Margin="307,10,0,0" VerticalAlignment="Top" Width="75" Click="btnStart_Click"/>
         </Grid>
     </Grid>
 </Window>
